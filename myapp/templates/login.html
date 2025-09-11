@@ -1,0 +1,135 @@
+{% extends 'base.html' %} 
+
+{% block title %}
+<title>Admin Login Page</title>
+{% endblock %}
+{% block content %}
+<style>
+
+
+ 
+  html,body {
+    background: linear-gradient(to right, #e772b2, #6ab476, #2c5364);
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    height: 100%;
+    
+  }
+
+  /* Watermark background text */
+  .bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 80px;
+    font-weight: 900;
+    color: rgba(255, 255, 255, 0.05);
+    white-space: nowrap;
+    z-index: 0;
+    user-select: none;
+  }
+
+  .login-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 170px 0;
+  }
+
+  .login-card {
+    background: linear-gradient(to bottom right, #ffffff, #e0f7fa);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+  }
+
+  .login-card:hover {
+    transform: scale(1.015);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+  }
+
+  .login-card h3 {
+    font-weight: bold;
+    background: linear-gradient(to right, #2193b0, #6dd5ed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+  }
+
+  .form-floating input {
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background-color: #b7cc6d;
+  }
+
+  .form-floating input:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 204, 255, 0.25);
+    border-color: #00c9ff;
+  }
+
+  
+
+
+  .btn-gradient {
+    background: linear-gradient(to right, #00c9ff, #92fe9d);
+    border: none;
+    border-radius: 30px;
+    color: #000;
+    font-weight: bold;
+    padding: 10px;
+    transition: 0.4s ease;
+  }
+
+  .btn-gradient:hover {
+    background: linear-gradient(to right, #92fe9d, #00c9ff);
+    box-shadow: 0 0 15px #00c9ff, 0 0 30px #92fe9d;
+  }
+
+  .error-msg {
+    color: red;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.95rem;
+  }
+</style>
+
+
+<div class="bg-text">Ward 12 Admin</div>
+
+<div class="login-container">
+  <div class="login-card">
+    <h3 class="mb-4">Admin Login</h3>
+
+    <form method="post" autocomplete="off">
+      {% csrf_token %}
+
+      <!-- Hidden username field -->
+      <input type="hidden" name="username" value="admin" />
+
+      <!-- Only show password field -->
+      <div class="form-floating mb-3">
+        {{ form.password }}
+        <label for="floatingPassword">Password</label>
+      </div>
+
+      {% if login_failed %}
+        <div class="error-msg">❌ Invalid admin password.</div>
+      {% endif %}
+
+      <button type="submit" class="btn btn-gradient w-100">🔐 Login</button>
+      
+    </form>
+  </div>
+</div>
+
+
+
+    
+{% endblock %}

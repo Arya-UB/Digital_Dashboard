@@ -1,0 +1,28 @@
+{% extends 'uploads.html' %}
+
+{% block title %}
+  <title>Announcement Gallery - Ward12</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5" style="max-width: 750px;">
+  <h2 class="text-center mb-4">✏️ Update Announcement</h2>
+
+  {% if request.user.is_staff %}
+    <form method="POST" enctype="multipart/form-data" class="bg-light p-4 rounded shadow">
+      {% csrf_token %}
+      {{ form.as_p }}
+
+      <div class="d-flex justify-content-between mt-4">
+        <button type="submit" class="btn btn-sucess">✅ Update</button>
+        <a href="{% url 'delete' form.instance.pk %}" class="btn btn-danger"
+           onclick="return confirm('Are you sure you want to delete this announcement?');">🗑️ Delete</a>
+      </div>
+    </form>
+  {% else %}
+    <div class="alert alert-danger text-center mt-4">
+      ❌ You do not have permission to edit or delete this announcement.
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

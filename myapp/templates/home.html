@@ -1,0 +1,63 @@
+{% extends 'Adduploads.html' %}
+{% block title %}
+<title>Ward 12 Home Page</title>
+{% endblock %}
+{% block content %}
+{% block logout %}
+{% endblock %}
+<style>
+    html, body{
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        background-color: rgb(173, 103, 18);
+        background-size: cover;
+        background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyaAGc_yvMyX8xs6juEoTQDggsa324Adf0kw&s');    
+        font-family: Arial, Helvetica, sans-serif;
+        color: white;
+
+
+    }
+
+    .overlay {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* dark overlay */
+      text-align: center;
+      padding: 20px;
+    }
+
+    .intro-text {
+      max-width: 800px;
+    }
+
+    .intro-text h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .intro-text p {
+      font-size: 1.5rem;
+      line-height: 1.6;
+    }
+
+</style>
+<body>
+
+  <div class="overlay">
+    <div class="intro-text">
+      <h1>Welcome to Healthcare Group Ward 12</h1>
+      <p>
+         
+        This platform provides a visual archive of our whatsapp group where get daily uploads !
+
+        <center><b>Explore The Platform </center></b>
+      </p>
+    </div>
+  </div>
+
+</body>
+</html>
+{% endblock %}

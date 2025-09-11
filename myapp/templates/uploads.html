@@ -1,0 +1,147 @@
+{% extends 'Adduploads.html' %}
+
+{% block title %}
+<title>Uploaded Files Gallery</title>
+{% endblock %}
+
+{% block content %}
+<style>
+  body {
+    background: linear-gradient(to right, #0877c0, #3207ce);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+  }
+
+  .gallery-card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    background-color: burlywood;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .gallery-card:hover {
+    transform: scale(1.03);
+  }
+
+  .gallery-img,
+  .gallery-video {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    cursor: pointer;
+  }
+
+  .upload-date {
+    background-color: #e3f2fd;
+    padding: 6px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #0d6efd;
+    margin-top: 10px;
+  }
+
+  .card-actions {
+    margin-top: 10px;
+  }
+
+  .zoom-img {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .zoom-img:hover {
+    transform: scale(1.1);
+  }
+
+  .overlay-bg {
+    background: linear-gradient(to right, #60bd92, #e58fde);
+    padding: 120px 0 60px;
+    min-height: 56px;
+    width: 100%;
+    color: #fff;
+  }
+
+  .heading-with-balloon {
+    font-weight: bold;
+    font-size: 2rem;
+    color: #fff;
+    position: relative;
+    padding-bottom: 20px;
+  }
+
+  .balloon {
+    font-size: 1.8rem;
+    margin: 0 10px;
+    animation: float 2s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+</style>
+
+<div class="overlay-bg">
+  <div class="container">
+    <h2 class="text-center heading-with-balloon">
+      <span class="balloon">🎈</span> Uploads Of Healthcare Group Ward 12
+      <span class="balloon">🎈</span>
+    </h2>
+
+    <div class="row pt-4">
+      {% for i in items %}
+      <div class="col-md-4 mb-4">
+        <div class="gallery-card p-3">
+          {% if i.File %}
+            {% with i.File.url|lower as file_url %}
+              {% if file_url|slice:"-4:" == ".jpg" or file_url|slice:"-4:" == ".png" or file_url|slice:"-5:" == ".jpeg" %}
+                <a href="{{ i.File.url }}" target="_blank">
+                  <img src="{{ i.File.url }}" class="gallery-img zoom-img" alt="Image">
+                </a>
+              {% elif file_url|slice:"-4:" == ".mp4" or file_url|slice:"-5:" == ".webm" %}
+                <video class="gallery-video" controls>
+                  <source src="{{ i.File.url }}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              {% else %}
+                <div class="p-3">📁 <a href="{{ i.File.url }}" target="_blank">{{ i.File.name }}</a></div>
+              {% endif %}
+            {% endwith %}
+          {% elif i.link %}
+            <!-- Show YouTube or external video link -->
+            <div class="p-2">
+              <a href="{{ i.link }}" target="_blank" class="btn btn-outline-info w-100" style="color: black;">
+                📺 Watch Video Link
+              </a>
+            </div>
+          {% endif %}
+
+          <div class="mt-3 text-center">
+            <span class="upload-date">Uploaded on: {{ i.Uploaded_date }}</span>
+
+             {% if request.user.username == "admin" %}
+            <div class="card-actions">
+              <a href="{% url 'update' i.id %}" class="btn btn-sm btn-warning me-2">✏️ Edit</a>
+              <a href="{% url 'delete' i.id %}" class="btn btn-sm btn-danger"
+                 onclick="return confirm('Are you sure you want to delete this file?')">🗑️ Delete</a>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+        <div class="col-12 text-center text-muted">No files uploaded yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}
+  <title>Ward 12 Announcements</title>
+{% endblock %}
+
+{% block content %}
+<style>
+  /* Enchanted styles for announcement cards */
+  .enchanted-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px);
+    border-radius: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .enchanted-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 123, 255, 0.2);
+  }
+
+  /* Gradient title text */
+  .text-gradient {
+    background: linear-gradient(90deg, #007bff, #6610f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Smooth font style (optional) */
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    background: #f7f9fc;
+  }
+
+  /* Light glow badge */
+  .badge {
+    font-size: 0.8rem;
+    padding: 0.4em 0.7em;
+    background: #f1f1f1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+</style>
+
+<div class="container py-5">
+  <h2 class="mb-5 text-center fw-bold display-5 text-gradient">🌟 Latest Announcements</h2>
+  
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for item in items %}
+    <div class="col">
+      <div class="card h-100 enchanted-card position-relative shadow-lg border-0">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold text-primary-emphasis">{{ item.title }}</h5>
+          <p class="card-text text-dark-emphasis">{{ item.message }}</p>
+        </div>
+        <div class="card-footer bg-transparent border-0 text-end pe-3">
+          <span class="badge bg-light text-muted rounded-pill shadow-sm">
+            📅 {{ item.uploaded_date|date:"M d, Y" }}
+          </span>
+          {% if request.user.username == "admin" and item.id %}
+            <div class="card-actions">
+              <a href="{% url 'anupdate' item.id %}" class="btn btn-sm btn-warning me-2">✏️ Edit</a>
+              <a href="{% url 'andelete' item.id %}" class="btn btn-sm btn-danger"
+                 onclick="return confirm('Are you sure you want to delete this file?')">🗑️ Delete</a>
+            </div>
+            
+           
+            {% endif %}
+        </div>
+      </div>
+    </div>
+    
+    {% empty %}
+    
+    <div class="col text-center text-muted">
+      <p>No announcements yet.✨</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

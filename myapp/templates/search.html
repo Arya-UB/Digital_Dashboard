@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+<body>
+<form method="get" action="{% url 'search' %}">
+    <label for="datetime">Search by date </label>
+    <input type="date" name="date" id="date" required>
+    <button type="submit">Search</button>
+</form>
+
+    <h2>Results for: {{ query }}</h2>
+
+    {% if item %}
+        <ul>
+        {% for i in item %}
+            <li>
+                {{ i.Filetype }} — 
+                <a href="{{ i.File.url }}" target="_blank">{{ i.File.name }}</a> <br>
+                Uploaded on: {{ i.Uploaded_date }}
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No matching items found.</p>
+    {% endif %}
+
+</body>
+</html>
