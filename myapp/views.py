@@ -50,7 +50,7 @@ class AdminRegisterView(View):
             username = form.cleaned_data.get('username')
 
             password = form.cleaned_data.get('password')
-
+            
             User.objects.create_user(username=username,password=password)
 
 

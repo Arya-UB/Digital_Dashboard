@@ -7,10 +7,11 @@
 {% block content %}
 <style>
   body {
-    background: linear-gradient(to right, #0877c0, #3207ce);
-    min-height: 100vh;
+    /* background: linear-gradient(to right, #0877c0, #3207ce); */
+    min-height: 100%;
     margin: 0;
     padding: 0;
+    width: 100%;
   }
 
   .gallery-card {
@@ -58,9 +59,10 @@
   .overlay-bg {
     background: linear-gradient(to right, #60bd92, #e58fde);
     padding: 120px 0 60px;
-    min-height: 56px;
+    min-height: 100vh;
     width: 100%;
     color: #fff;
+    position: relative;
   }
 
   .heading-with-balloon {
